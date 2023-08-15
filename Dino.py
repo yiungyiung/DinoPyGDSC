@@ -9,8 +9,8 @@ clock = pygame.time.Clock()
 
 # Game Variables
 running = True
-
-
+score=0
+starttime = 0
 # Surface and images
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
@@ -31,9 +31,10 @@ DinoGravity = 0
 
 # Fonts
 scorefont = pygame.font.Font("font/Pixeltype.ttf", 50)
-
+score_txt=scorefont.render(str(score), False, (0, 0, 255))
+score_rect=score_txt.get_rect(center=(600,50))
 txt_surface = scorefont.render("Dino Reworked", False, (0, 0, 255))
-scorerect = txt_surface.get_rect(center=(400, 100))
+namerect = txt_surface.get_rect(center=(400, 100))
 while True:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -50,23 +51,25 @@ while True:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     running = True
+                    starttime=pygame.time.get_ticks()
+                    
 
     if running:
         # RENDER YOUR GAME HERE
-
         screen.blit(sky_surface, (0, 0))
         screen.blit(ground_surface, (0, 300))
-        screen.blit(txt_surface, scorerect)
-
+        screen.blit(txt_surface, namerect)
         # Cactus Logic
         screen.blit(cactus, cactusrect)
         cactusrect.left -= 5
         if (cactusrect.right < 0):
             cactusrect.left = 700
+            score+=1
         if cactusrect.colliderect(Dinorect):
             print("hit player")
             running = False
             cactusrect.left = 700
+            Dinorect.bottom = 315
 
         # Player Logic
         screen.blit(Dino, Dinorect)
@@ -74,9 +77,15 @@ while True:
         Dinorect.y += DinoGravity
         if Dinorect.bottom > 315:
             Dinorect.bottom = 315
-
+        #Score
+        score=int((pygame.time.get_ticks()-starttime)/1000)
+        print(score)
+        score_txt=scorefont.render(str(score), False, (0, 0, 255))
+        screen.blit(score_txt,score_rect)
     else:
+        score=0
         screen.fill("black")
+
     pygame.display.update()
     clock.tick(60)  # limits FPS to 60
 # test questions
