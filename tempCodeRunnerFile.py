@@ -1,1 +1,1 @@
-core_rect
+Sky

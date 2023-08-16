@@ -5,10 +5,15 @@ import pygame
 
 # pygame setup
 pygame.init()
+pygame.mixer.init()
 # (w,h)$topleft(0,0)$botright(800,400)
 screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption("gamename")  # set game name
 clock = pygame.time.Clock()
+
+#audio
+jump=pygame.mixer.Sound("audio/jump.wav")
+death=pygame.mixer.Sound("audio/death.wav")
 
 # Game Variables
 running = True
@@ -38,15 +43,24 @@ cloud1=pygame.image.load("graphics/cloud.png").convert_alpha()
 cloud1 =pygame.transform.scale(cloud1,(50,25))
 cloud1rect=cloud1.get_rect(center=(700,100))
 
+#deathscreen
+deathsc=pygame.image.load("graphics/Death.jpg").convert()
+deathsc=pygame.transform.scale(deathsc,(800,400))
 
 # Fonts
-scorefont = pygame.font.Font("font/Pixeltype.ttf", 50)
-
-score_txt=scorefont.render(str(score), False, (0, 0, 255))
+font = pygame.font.Font("font/Pixeltype.ttf", 50)
+deathfont = pygame.font.Font("font/Pixeltype.ttf", 75)
+score_txt=font.render(str(score), False, (0, 0, 255))
 score_rect=score_txt.get_rect(center=(700,50))
 
-txt_surface = scorefont.render("Dino Reworked", False, (0, 0, 255))
-namerect = txt_surface.get_rect(center=(400, 100))
+txt_surface = font.render("Dino Reworked", False, (0, 0, 255))
+namerect = txt_surface.get_rect(center=(400, 50))
+
+gameover_txt=deathfont.render("Game Over", False, (255,0,0))
+gameover_rect=gameover_txt.get_rect(midbottom=(420,150))
+
+gameover_txt1=deathfont.render("Press Enter to continue", False, (255,0,0))
+gameover_rect1=gameover_txt.get_rect(midbottom=(280,150+75))
 
 while True:
     # poll for events
@@ -60,6 +74,7 @@ while True:
                 print(Dinorect.bottom)
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_UP) and Dinorect.bottom >= 315:
                     DinoGravity = -10
+                    jump.play()
         else:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -85,14 +100,15 @@ while True:
         if score>nextscorelim:
             Cactspeed+=1
             nextscorelim=nextscorelim+100
-        if (cactusrect.right < 0):
+        if (cactusrect.right < 0):#cactus back to pos
             cactusrect.left = 700
             score+=1
-        if cactusrect.colliderect(Dinorect):
+        if cactusrect.colliderect(Dinorect):#cactus collision
             print("hit player")
             running = False
             cactusrect.left = 700
             Dinorect.bottom = 315
+            death.play()
 
         # Player Logic
         screen.blit(Dino, Dinorect)
@@ -104,12 +120,16 @@ while True:
         #Score
         score=int((pygame.time.get_ticks()-starttime)/100)
         #print(score)
-        score_txt=scorefont.render(str(score), False, (0, 0, 255))
+        score_txt=font.render(str(score), False, (0, 0, 255))
         screen.blit(score_txt,score_rect)
 
     else:
         score=0
-        screen.fill("black")
+        screen.blit(deathsc,(0,0))
+        screen.blit(gameover_txt,gameover_rect)
+        screen.blit(gameover_txt1,gameover_rect1)
+
+
 
     pygame.display.update()
     clock.tick(60)  # limits FPS to 60
