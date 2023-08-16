@@ -1,6 +1,5 @@
 import random as rand
 
-import numpy as np
 import pygame
 
 # pygame setup
@@ -8,12 +7,12 @@ pygame.init()
 pygame.mixer.init()
 # (w,h)$topleft(0,0)$botright(800,400)
 screen = pygame.display.set_mode((800, 400))
-pygame.display.set_caption("gamename")  # set game name
+pygame.display.set_caption("DinoReworked")  # set game name
 clock = pygame.time.Clock()
 
 #audio
-jump=pygame.mixer.Sound("audio/jump.wav")
-death=pygame.mixer.Sound("audio/death.wav")
+jump=pygame.mixer.Sound("assets/audio/jump.wav")
+death=pygame.mixer.Sound("assets/audio/death.wav")
 
 # Game Variables
 running = True
@@ -23,33 +22,34 @@ Cactspeed=5
 nextscorelim=100
 
 # Surface and images
-sky_surface = pygame.image.load('graphics/Sky.png').convert()
-ground_surface = pygame.image.load('graphics/ground.png').convert()
+sky_surface = pygame.image.load('assets/graphics/Sky.png').convert()
+ground_surface = pygame.image.load('assets/graphics/ground.png').convert()
 
 # Cactus
-cactus = pygame.image.load('graphics/Cactus.png').convert_alpha()
+cactus = pygame.image.load('assets/graphics/Cactus.png').convert_alpha()
 cactus = pygame.transform.scale(cactus, (50, 70))
 cactusrect = cactus.get_rect(midbottom=(700, 300))
 
 # Player
-Dino = pygame.image.load('graphics/Dino1.png').convert_alpha()
+Dino = pygame.image.load('assets/graphics/Dino1.png').convert_alpha()
+pygame.display.set_icon(Dino)
 Dino = pygame.transform.scale(Dino, (100, 100))
 Dinorect = Dino.get_rect(midbottom=(50, 315))
 DinoGravity = 0
 # Dino = pygame.transform.flip(Dino, True, False)
 
 #cloud
-cloud1=pygame.image.load("graphics/cloud.png").convert_alpha()
+cloud1=pygame.image.load("assets/graphics/cloud.png").convert_alpha()
 cloud1 =pygame.transform.scale(cloud1,(50,25))
 cloud1rect=cloud1.get_rect(center=(700,100))
 
 #deathscreen
-deathsc=pygame.image.load("graphics/Death.jpg").convert()
+deathsc=pygame.image.load("assets/graphics/Death.jpg").convert()
 deathsc=pygame.transform.scale(deathsc,(800,400))
 
 # Fonts
-font = pygame.font.Font("font/Pixeltype.ttf", 50)
-deathfont = pygame.font.Font("font/Pixeltype.ttf", 75)
+font = pygame.font.Font("assets/font/Pixeltype.ttf", 50)
+deathfont = pygame.font.Font("assets/font/Pixeltype.ttf", 75)
 score_txt=font.render(str(score), False, (0, 0, 255))
 score_rect=score_txt.get_rect(center=(700,50))
 
@@ -68,10 +68,8 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            quit()
         if running:
             if event.type == pygame.KEYDOWN:
-                print(Dinorect.bottom)
                 if (event.key == pygame.K_SPACE or event.key == pygame.K_UP) and Dinorect.bottom >= 315:
                     DinoGravity = -10
                     jump.play()
@@ -108,6 +106,7 @@ while True:
             running = False
             cactusrect.left = 700
             Dinorect.bottom = 315
+            Cactspeed=5
             death.play()
 
         # Player Logic
@@ -140,3 +139,4 @@ while True:
 #       print("mouse hit dino")
 # keys=pygame.keys.get_pressed()
 # keys[pygame.K_SPACE]
+#pygame.display.set_icon(pygame_icon)
