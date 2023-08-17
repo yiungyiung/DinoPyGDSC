@@ -1,0 +1,6 @@
+https://www.pygame.org/docs/
+https://www.1001freefonts.com/
+https://code.visualstudio.com/
+https://www.python.org/
+https://www.piskelapp.com/
+pip install pygame

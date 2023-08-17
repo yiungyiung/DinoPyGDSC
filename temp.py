@@ -1,5 +1,4 @@
 import random as rand
-
 import pygame
 
 # pygame setup
@@ -22,18 +21,18 @@ Cactspeed=5
 nextscorelim=100
 
 # Surface and images
-sky_surface = pygame.image.load('assets/graphics/Sky.png').convert()
-ground_surface = pygame.image.load('assets/graphics/ground.png').convert()
+sky_surface = pygame.image.load('assets/graphics/Sky.png').convert()#800*300
+ground_surface = pygame.image.load('assets/graphics/ground.png').convert()#800*100
 
 # Cactus
 cactus = pygame.image.load('assets/graphics/Cactus.png').convert_alpha()
-cactus = pygame.transform.scale(cactus, (50, 70))
+cactus = pygame.transform.scale(cactus, (50, 70))#50*30
 cactusrect = cactus.get_rect(midbottom=(700, 300))
 
 # Player
 Dino = pygame.image.load('assets/graphics/Dino1.png').convert_alpha()
 pygame.display.set_icon(Dino)
-Dino = pygame.transform.scale(Dino, (100, 100))
+Dino = pygame.transform.scale(Dino, (100, 100))#100*100
 Dinorect = Dino.get_rect(midbottom=(50, 315))
 DinoGravity = 0
 # Dino = pygame.transform.flip(Dino, True, False)
