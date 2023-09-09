@@ -1,6 +1,5 @@
 import random as rand
 import pygame
-
 # pygame setup
 pygame.init()
 pygame.mixer.init()
@@ -12,7 +11,7 @@ clock = pygame.time.Clock()
 #audio
 jump=pygame.mixer.Sound("assets/audio/jump.wav")
 death=pygame.mixer.Sound("assets/audio/death.wav")
-
+ 
 # Game Variables
 running = True
 score=0
@@ -90,7 +89,6 @@ while True:
         if(cloud1rect.right<0):
             cloud1rect.left=800
             cloud1rect.top=rand.choice([50,100,150,25])
-
         # Cactus Logic
         screen.blit(cactus, cactusrect)
         cactusrect.left -= Cactspeed
@@ -139,3 +137,5 @@ while True:
 # keys=pygame.keys.get_pressed()
 # keys[pygame.K_SPACE]
 #pygame.display.set_icon(pygame_icon)
+#keys = pygame.key.get_pressed() 
+# if keys[pygame.K_UP]:
